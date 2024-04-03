@@ -12,7 +12,7 @@ TILE = 100
 FPS_POS = (WIDTH - 65, 5)
 
 # Настройки миникарты
-MINIMAP_SCALE = 5
+MINIMAP_SCALE = 6
 MINIMAP_RES = (WIDTH // MINIMAP_SCALE, HEIGHT // MINIMAP_SCALE)
 MAP_SCALE = 2 * MINIMAP_SCALE  # 1 -> 12 x 8, 2 -> 24 x 16, 3 -> 36 x 24
 MAP_TILE = TILE // MAP_SCALE
@@ -44,7 +44,9 @@ TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 player_pos = (HALF_WIDTH // 4, HALF_HEIGHT - 50)
 player_angle = 0
 player_speed = 1
-player_stamina = 3 * FPS
+player_stamina = 100  # Начальное значение выносливости
+player_max_stamina = 100  # Максимальное значение выносливости
+player_stamina_regen_rate = 5  # Скорость восстановления выносливости в единицах в секунду
 
 # Цвета
 WHITE = (255, 255, 255)
@@ -61,5 +63,6 @@ DARKBROWN = (97, 61, 25)
 DARKORANGE = (255, 140, 0)
 
 # Карта
-maze_height = 15
-maze_width = int(maze_height * (25/15))
+MAZE_HEIGHT = 25
+MAZE_WIDTH = MAZE_HEIGHT
+# maze_width = int(maze_height * (25/15))

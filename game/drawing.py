@@ -54,6 +54,12 @@ class Drawing:
                 _, obj, object_pos = obj
                 self.sc.blit(obj, object_pos)
 
+    def stamina(self, player):
+        stamina = player.stamina
+        font = pygame.font.Font(None, 36)
+        text = font.render(f'Stamina: {int(stamina)}', True, DARKORANGE)
+        self.sc.blit(text, (10, 10))
+
     def fps(self, clock):
         display_fps = str(int(clock.get_fps()))
         render = self.font.render(display_fps, 0, DARKORANGE)

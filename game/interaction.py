@@ -95,7 +95,7 @@ class Interaction:
         pygame.mixer.music.play(10)
 
     def check_win(self):
-        if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]):
+        if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'goal' and not obj.is_dead]):
             pygame.mixer.music.stop()
             pygame.mixer.music.load('sound/win.mp3')
             pygame.mixer.music.play()

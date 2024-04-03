@@ -12,6 +12,10 @@ class Player:
         self.sprites = sprites
         self.angle = player_angle
         self.sensitivity = 0.004
+        self.speed = player_speed
+        self.stamina = player_stamina
+        self.stamina_max = player_max_stamina
+        self.stamina_regen = player_stamina_regen_rate
         # collision parameters
         self.side = 50
         self.rect = pygame.Rect(*player_pos, self.side, self.side)
@@ -61,15 +65,19 @@ class Player:
         self.angle %= DOUBLE_PI
 
     def keys_control(self):
-        global player_speed
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
+        player_speed = self.speed
+        stamina = self.stamina
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
             exit()
 
-        if keys[pygame.K_LSHIFT]:
+        if keys[pygame.K_LSHIFT] and self.stamina > 0:
             player_speed *= 3
+            self.stamina -= 10 / FPS
+        elif stamina < player_stamina:
+            self.stamina += self.stamina_regen / FPS
 
         if keys[pygame.K_w]:
             dx = player_speed * cos_a

@@ -36,12 +36,12 @@ class Sprites:
                 'side': 30,
                 'animation': deque([pygame.image.load(f'sprites/pin/anim/{i}.png').convert_alpha() for i in range(8)]),
                 'death_animation': [],
-                'is_dead': 'immortal',
+                'is_dead': False,
                 'dead_shift': None,
                 'animation_dist': 800,
                 'animation_speed': 10,
                 'blocked': True,
-                'flag': 'decor',
+                'flag': 'goal',
                 'obj_action': []
             },
             'sprite_flame': {
@@ -70,7 +70,7 @@ class Sprites:
                 'animation': [],
                 'death_animation': deque([pygame.image.load(f'sprites/devil/death/{i}.png')
                                          .convert_alpha() for i in range(6)]),
-                'is_dead': None,
+                'is_dead': False,
                 'dead_shift': 0.6,
                 'animation_dist': None,
                 'animation_speed': 10,
@@ -132,13 +132,13 @@ class Sprites:
         }
 
         self.list_of_objects = [
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (7.1, 2.1)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.9, 2.1)),
-            SpriteObject(self.sprite_parameters['sprite_pin'], (8.7, 2.5)),
-            SpriteObject(self.sprite_parameters['npc_devil'], (7, 4)),
+            # SpriteObject(self.sprite_parameters['sprite_barrel'], (7.1, 2.1)),
+            # SpriteObject(self.sprite_parameters['sprite_barrel'], (5.9, 2.1)),
+            SpriteObject(self.sprite_parameters['sprite_pin'], (1.5, 1.5)),
+            SpriteObject(self.sprite_parameters['npc_devil'], (9, 9)),
             # SpriteObject(self.sprite_parameters['sprite_flame'], (8.6, 5.6)),
-            SpriteObject(self.sprite_parameters['sprite_door_v'], (3.5, 3.5)),
-            SpriteObject(self.sprite_parameters['sprite_door_h'], (1.5, 4.5)),
+            # SpriteObject(self.sprite_parameters['sprite_door_v'], (3.5, 3.5)),
+            # SpriteObject(self.sprite_parameters['sprite_door_h'], (1.5, 4.5)),
             # SpriteObject(self.sprite_parameters['npc_soldier0'], (2.5, 1.5)),
             # SpriteObject(self.sprite_parameters['npc_soldier0'], (5.51, 1.5)),
             # SpriteObject(self.sprite_parameters['npc_soldier0'], (6.61, 2.92)),

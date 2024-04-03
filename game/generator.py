@@ -50,14 +50,14 @@ class PrimsMazeGenerator:
         if self.is_point_in_maze(maze, x, y + 2) and not self.is_road(maze, x, y + 2):
             points.add((x, y + 2))
 
-    def format_maze(self, maze):
-        form_maze = [[False for _ in range(len(maze[0]) + 1)] for _ in range(len(maze) + 1)]
-        for y in range(1, len(form_maze)):
-            for x in range(1, len(form_maze[y])):
-                if maze[y - 1][x - 1]:
-                    form_maze[y][x] = 1
-                else:
+    def format_maze(self, maze_link):
+        form_maze = [[1 for _ in range(len(maze_link[0]) + 2)] for _ in range(len(maze_link) + 2)]
+        for y in range(1, len(form_maze)-1):
+            for x in range(1, len(form_maze[y])-1):
+                if maze_link[y - 1][x - 1]:
                     form_maze[y][x] = False
+                else:
+                    form_maze[y][x] = 1
         return form_maze
 
     def is_road(self, maze, x, y):
@@ -65,43 +65,3 @@ class PrimsMazeGenerator:
 
     def is_point_in_maze(self, maze, x, y):
         return 0 <= y < maze.shape[0] and 0 <= x < maze.shape[1]
-
-
-gen = PrimsMazeGenerator(10, 10)
-ready = gen.generate(10, 10)
-for y in range(len(ready)):
-    for x in range(len(ready[y])):
-        if ready[y][x] == 1:
-            print("_", end=" ")
-        else:
-            print("1", end=" ")
-    print()
-
-# for y in range(len(ready)):
-#     for x in range(len(ready[y])):
-#         if ready[y][x]:
-#             print("_", end=" ")
-#         else:
-#             print("1", end=" ")
-#     print()
-#
-# red = [[1 for x in range(len(ready[0]) + 1)] for y in range(len(ready) + 1)]
-#
-# for p in range(len(red)):
-#     print(red[p])
-# print()
-#
-# for y in range(1, len(red)):
-#     for x in range(1, len(red[y])):
-#         if ready[y-1][x-1]:
-#             red[y][x] = "1"
-#         else:
-#             red[y][x] = "_"
-#
-# for y in range(len(red)):
-#     for x in range(len(red[y])):
-#         if red[y][x] == "1":
-#             print("_", end=" ")
-#         else:
-#             print("1", end=" ")
-#     print()
