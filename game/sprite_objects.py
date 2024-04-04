@@ -1,10 +1,14 @@
 import pygame
+from map import matrix_map
+from generate import PrimsMazeGenerator
 from settings import *
 from collections import deque
 from ray_casting import mapping
 from numba.core import types
 from numba.typed import Dict
 from numba import int32
+
+gen = PrimsMazeGenerator(MAZE_WIDTH, MAZE_HEIGHT)
 
 
 class Sprites:
@@ -74,7 +78,7 @@ class Sprites:
                 'dead_shift': 0.6,
                 'animation_dist': None,
                 'animation_speed': 10,
-                'blocked': True,
+                'blocked': False,
                 'flag': 'npc',
                 'obj_action': deque(
                     [pygame.image.load(f'sprites/devil/anim/{i}.png').convert_alpha() for i in range(9)]),
@@ -130,12 +134,14 @@ class Sprites:
                                     .convert_alpha() for i in range(4)])
             },
         }
+        xy = gen.found_empty_space(matrix_map)
+        xy2 = gen.found_empty_space(matrix_map)
 
         self.list_of_objects = [
             # SpriteObject(self.sprite_parameters['sprite_barrel'], (7.1, 2.1)),
             # SpriteObject(self.sprite_parameters['sprite_barrel'], (5.9, 2.1)),
-            SpriteObject(self.sprite_parameters['sprite_pin'], (1.5, 1.5)),
-            SpriteObject(self.sprite_parameters['npc_devil'], (9, 9)),
+            SpriteObject(self.sprite_parameters['sprite_pin'], xy2),
+            SpriteObject(self.sprite_parameters['npc_devil'], xy),
             # SpriteObject(self.sprite_parameters['sprite_flame'], (8.6, 5.6)),
             # SpriteObject(self.sprite_parameters['sprite_door_v'], (3.5, 3.5)),
             # SpriteObject(self.sprite_parameters['sprite_door_h'], (1.5, 4.5)),
@@ -232,7 +238,6 @@ class SpriteObject:
             half_sprite_height = sprite_height // 2
             shift = half_sprite_height * self.shift
 
-            # logic for doors, npc, decor
             if self.flag in {'door_h', 'door_v'}:
                 if self.door_open_trigger:
                     self.open_door()

@@ -42,6 +42,7 @@ TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 
 # Настройки игрока
 player_pos = (HALF_WIDTH // 4, HALF_HEIGHT - 50)
+player_health = 100
 player_angle = 0
 player_speed = 1
 player_stamina = 100  # Начальное значение выносливости

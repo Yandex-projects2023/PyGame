@@ -1,5 +1,5 @@
 from settings import *
-from generator import PrimsMazeGenerator
+from generate import PrimsMazeGenerator
 import pygame
 from numba.core import types
 from numba.typed import Dict
@@ -28,8 +28,6 @@ _ = False
 gen = PrimsMazeGenerator(MAZE_WIDTH, MAZE_HEIGHT)
 matrix_map = gen.generate(MAZE_WIDTH, MAZE_HEIGHT)
 
-
-# matrix_map = list(generate_maze(15, 24))
 # for i in matrix_map:
 #     print(i)
 

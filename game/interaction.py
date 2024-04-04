@@ -46,7 +46,7 @@ class Interaction:
         self.player = player
         self.sprites = sprites
         self.drawing = drawing
-        self.pain_sound = pygame.mixer.Sound('sound/pain.wav')
+        self.pain_sound = pygame.mixer.Sound('sound/pain.mp3')
 
     def interaction_objects(self):
         if self.player.shot and self.drawing.shot_animation_trigger:
@@ -69,20 +69,22 @@ class Interaction:
     def npc_action(self):
         for obj in self.sprites.list_of_objects:
             if obj.flag == 'npc' and not obj.is_dead:
-                if ray_casting_npc_player(obj.x, obj.y,
-                                          self.sprites.blocked_doors,
-                                          world_map, self.player.pos):
-                    obj.npc_action_trigger = True
-                    self.npc_move(obj)
-                else:
-                    obj.npc_action_trigger = False
+                # if ray_casting_npc_player(obj.x, obj.y,
+                #                           self.sprites.blocked_doors,
+                #                           world_map, self.player.pos):
+                obj.npc_action_trigger = True
+                self.npc_move(obj)
+            else:
+                obj.npc_action_trigger = False
 
     def npc_move(self, obj):
         if abs(obj.distance_to_sprite) > TILE:
             dx = obj.x - self.player.pos[0]
             dy = obj.y - self.player.pos[1]
-            obj.x = obj.x + 1 if dx < 0 else obj.x - 1
-            obj.y = obj.y + 1 if dy < 0 else obj.y - 1
+            obj.x = obj.x + 0.5 if dx < 0 else obj.x - 0.5
+            obj.y = obj.y + 0.5 if dy < 0 else obj.y - 0.5
+        else:
+            self.player.health -= 0.1
 
     def clear_world(self):
         deleted_objects = self.sprites.list_of_objects[:]
@@ -93,14 +95,28 @@ class Interaction:
         pygame.mixer.init()
         pygame.mixer.music.load('sound/theme.mp3')
         pygame.mixer.music.play(10)
+        pygame.mixer.music.set_volume(0.2)
 
     def check_win(self):
         if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'goal' and not obj.is_dead]):
             pygame.mixer.music.stop()
-            pygame.mixer.music.load('sound/win.mp3')
+            pygame.mixer.music.load('sound/win.ogg')
             pygame.mixer.music.play()
+            pygame.mixer.music.set_volume(0.1)
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         exit()
                 self.drawing.win()
+
+    def check_lose(self):
+        if self.player.health <= 0:
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load('sound/lose.mp3')
+            pygame.mixer.music.play()
+            pygame.mixer.music.set_volume(0.1)
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        exit()
+                self.drawing.lose()

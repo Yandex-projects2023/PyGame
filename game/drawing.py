@@ -60,6 +60,12 @@ class Drawing:
         text = font.render(f'Stamina: {int(stamina)}', True, DARKORANGE)
         self.sc.blit(text, (10, 10))
 
+    def health(self, player):
+        health = player.health
+        font = pygame.font.Font(None, 36)
+        text = font.render(f'Health: {int(health)}', True, DARKORANGE)
+        self.sc.blit(text, (10, 40))
+
     def fps(self, clock):
         display_fps = str(int(clock.get_fps()))
         render = self.font.render(display_fps, 0, DARKORANGE)
@@ -110,20 +116,29 @@ class Drawing:
         rect = pygame.Rect(0, 0, 1000, 300)
         rect.center = HALF_WIDTH, HALF_HEIGHT
         pygame.draw.rect(self.sc, BLACK, rect, border_radius=50)
-        self.sc.blit(render, (rect.centerx - 430, rect.centery - 140))
+        self.sc.blit(render, (rect.centerx - 460, rect.centery - 90))
+        pygame.display.flip()
+        self.clock.tick(15)
+
+    def lose(self):
+        render = self.font_win.render('YOU DEAD!!', 1, (randrange(40, 120), 0, 0))
+        rect = pygame.Rect(0, 0, 1000, 300)
+        rect.center = HALF_WIDTH, HALF_HEIGHT
+        pygame.draw.rect(self.sc, BLACK, rect, border_radius=50)
+        self.sc.blit(render, (rect.centerx - 460, rect.centery - 90))
         pygame.display.flip()
         self.clock.tick(15)
 
     def menu(self):
         x = 0
         button_font = pygame.font.Font('font/font.ttf', 72)
-        label_font = pygame.font.Font('font/font1.otf', 400)
-        start = button_font.render('START', 1, pygame.Color('lightgray'))
+        label_font = pygame.font.Font('font/font1.otf', 70)
+        start = button_font.render('ENTER', 1, pygame.Color('lightgray'))
         button_start = pygame.Rect(0, 0, 400, 150)
         button_start.center = HALF_WIDTH, HALF_HEIGHT
-        exit = button_font.render('EXIT', 1, pygame.Color('lightgray'))
-        button_exit = pygame.Rect(0, 0, 400, 150)
-        button_exit.center = HALF_WIDTH, HALF_HEIGHT + 200
+        # exit = button_font.render('EXIT', 1, pygame.Color('lightgray'))
+        # button_exit = pygame.Rect(0, 0, 400, 150)
+        # button_exit.center = HALF_WIDTH, HALF_HEIGHT + 200
 
         while self.menu_trigger:
             for event in pygame.event.get():
@@ -135,28 +150,31 @@ class Drawing:
             x += 1
 
             pygame.draw.rect(self.sc, BLACK, button_start, border_radius=25, width=10)
-            self.sc.blit(start, (button_start.centerx - 130, button_start.centery - 70))
+            self.sc.blit(start, (button_start.centerx - 130, button_start.centery - 40))
 
-            pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25, width=10)
-            self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
+            # pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25, width=10)
+            # self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
 
             color = randrange(40)
-            label = label_font.render('DOOMPy', 1, (color, color, color))
-            self.sc.blit(label, (15, -30))
+            label = label_font.render('HE KNOWS WHERE YOU ARE.', 1, (color, color, color))
+            self.sc.blit(label, (WIDTH // 2 - 370, 200))
+            color = randrange(40)
+            label = label_font.render('FIND A SOUL', 1, (color, color, color))
+            self.sc.blit(label, (WIDTH // 2 - 190, 260))
 
             mouse_pos = pygame.mouse.get_pos()
             mouse_click = pygame.mouse.get_pressed()
             if button_start.collidepoint(mouse_pos):
-                pygame.draw.rect(self.sc, BLACK, button_start, border_radius=25)
-                self.sc.blit(start, (button_start.centerx - 130, button_start.centery - 70))
+                pygame.draw.rect(self.sc, DARKGRAY, button_start, border_radius=25)
+                self.sc.blit(start, (button_start.centerx - 130, button_start.centery - 40))
                 if mouse_click[0]:
                     self.menu_trigger = False
-            elif button_exit.collidepoint(mouse_pos):
-                pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25)
-                self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
-                if mouse_click[0]:
-                    pygame.quit()
-                    sys.exit()
+            # elif button_exit.collidepoint(mouse_pos):
+            #     pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25)
+            #     self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
+            #     if mouse_click[0]:
+            #         pygame.quit()
+            #         sys.exit()
 
             pygame.display.flip()
             self.clock.tick(20)

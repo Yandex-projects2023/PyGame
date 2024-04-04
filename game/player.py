@@ -14,6 +14,7 @@ class Player:
         self.sensitivity = 0.004
         self.speed = player_speed
         self.stamina = player_stamina
+        self.health = player_health
         self.stamina_max = player_max_stamina
         self.stamina_regen = player_stamina_regen_rate
         # collision parameters

@@ -67,6 +67,7 @@ class PrimsMazeGenerator:
         return 0 <= y < maze.shape[0] and 0 <= x < maze.shape[1]
 
 
+
 gen = PrimsMazeGenerator(10, 10)
 ready = gen.generate(10, 10)
 for y in range(len(ready)):
